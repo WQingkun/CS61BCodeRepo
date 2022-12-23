@@ -22,12 +22,15 @@ public class ArrayDeque<T> {
         nextLast = size;
     }
     private int conceptInd(int i){
-        if (nextFirst + 1 + i > items.length) {
+        if (nextFirst + 1 + i > items.length - 1) {
             return nextFirst + 1 + i - items.length;
         } else {
             return nextFirst + 1 +i;
         }
 
+    }
+    public int size(){
+        return size;
     }
     public void addFirst(T item){
         if (size == items.length) {
@@ -42,6 +45,7 @@ public class ArrayDeque<T> {
             }else {
                 nextFirst -= 1;
             }
+            size += 1;
         }
     }
     public void addLast(T item){
@@ -58,6 +62,7 @@ public class ArrayDeque<T> {
                 items[nextLast] = item;
                 nextLast += 1;
             }
+            size += 1;
         }
     }
     public boolean isEmpty(){
@@ -70,6 +75,9 @@ public class ArrayDeque<T> {
         System.out.println();
     }
     public T removeFirst(){
+        if (size == 0) {
+            return null;
+        }
         T val;
         if (nextFirst == items.length - 1){
             val = items[0];
@@ -82,6 +90,9 @@ public class ArrayDeque<T> {
         return val;
     }
     public T removeLast(){
+        if (size == 0) {
+            return null;
+        }
         T val;
         if (nextLast == 0) {
             val = items[items.length - 1];
@@ -94,6 +105,9 @@ public class ArrayDeque<T> {
         return val;
     }
     public T get(int index){
+        if (index < 0 || index > size - 1) {
+            return null;
+        }
         return items[conceptInd(index)];
     }
 }
