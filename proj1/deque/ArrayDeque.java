@@ -1,11 +1,11 @@
 package deque;
 
-public class ArrayListDeque<T> {
+public class ArrayDeque<T> {
     private int size;
     private T[] items;
     private int nextFirst;
     private int nextLast;
-    public ArrayListDeque(){
+    public ArrayDeque(){
         items = (T[]) new Object[8];
         size = 0;
         nextFirst = 4;

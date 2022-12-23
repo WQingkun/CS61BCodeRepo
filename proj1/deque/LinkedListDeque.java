@@ -1,8 +1,8 @@
 package deque;
 
 public class LinkedListDeque <T>{
-    int size;
-    Node sentinel = new Node();
+    private int size;
+    private Node sentinel = new Node();
     private class Node{
         T data;
         Node next;
