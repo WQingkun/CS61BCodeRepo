@@ -1,6 +1,7 @@
 package deque;
+import java.util.Iterator;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Iterable<T>, Deque<T>{
     private int size;
     private T[] items;
     private int nextFirst;
@@ -65,9 +66,9 @@ public class ArrayDeque<T> {
             size += 1;
         }
     }
-    public boolean isEmpty(){
-        return size == 0;
-    }
+//    public boolean isEmpty(){
+//        return size == 0;
+//    }
     public void printDeque(){
         for (int i = 0; i < size - 1; i++){
             System.out.print(items[conceptInd(i)] + " ");
@@ -109,5 +110,46 @@ public class ArrayDeque<T> {
             return null;
         }
         return items[conceptInd(index)];
+    }
+    public Iterator<T> iterator(){
+        return new ArrayListIterator();
+    }
+    private class ArrayListIterator implements Iterator<T>{
+        private int wizPos;
+        private ArrayListIterator(){
+            wizPos = 0;
+        }
+        public boolean hasNext(){
+            return wizPos < size;
+        }
+        public T next(){
+            T item = get(wizPos);
+            wizPos += 1;
+            return item;
+        }
+    }
+    public boolean equals(Object o){
+        //如果o和此Deque地址相同
+        if (this == o) {
+            return true;
+        }
+        //if o is empty ref, return false
+        if (o == null) {
+            return false;
+        }
+        //if o is not a ref of a Deque, return false
+        if (!(o instanceof Deque)){
+            return false;
+        }
+        Deque<T> ShallowO = (Deque<T>) o;
+        if (ShallowO.size() != this.size()){
+            return false;
+        }
+        for(int i = 0; i < this.size(); i++){
+            if (ShallowO.get(i) != this.get(i)){
+                return false;
+            }
+        }
+        return true;
     }
 }

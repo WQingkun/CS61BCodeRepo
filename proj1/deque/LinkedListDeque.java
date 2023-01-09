@@ -1,6 +1,6 @@
 package deque;
-
-public class LinkedListDeque <T>{
+import java.util.Iterator;
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
     private Node sentinel = new Node();
     private class Node{
@@ -43,9 +43,9 @@ public class LinkedListDeque <T>{
         //maintain sentinel node
         sentinel.prev = node;
     }
-    public boolean isEmpty(){
-        return size == 0;
-    }
+//    public boolean isEmpty(){
+//        return size == 0;
+//    }
     public int size(){
         return size;
     }
@@ -105,10 +105,49 @@ public class LinkedListDeque <T>{
         int nodeInd = 0;
         return getRecursiveHelper(index, nodeInd, node);
     }
-//    public Iterator<T> iterator(){
-//
-//    }
-//    public boolean equals(Object o){
-//
-//    }
+    public Iterator<T> iterator(){
+        return new LinkedListIterator();
+    }
+    public class LinkedListIterator implements Iterator<T>{
+        int wizPos;
+        public LinkedListIterator(){
+            wizPos = 0;
+        }
+        public int size(){
+            return size;
+        }
+        public boolean hasNext(){
+            return wizPos < size;
+        }
+        public T next(){
+
+            T val = get(wizPos);
+            wizPos += 1;
+            return val;
+        }
+    }
+    public boolean equals(Object o){
+        //如果o和此Deque地址相同
+        if (this == o) {
+            return true;
+        }
+        //if o is empty ref, return false
+        if (o == null) {
+            return false;
+        }
+        //if o is not a ref of a Deque, return false
+        if (!(o instanceof Deque)){
+            return false;
+        }
+        Deque<T> ShallowO = (Deque<T>) o;
+        if (ShallowO.size() != this.size()){
+            return false;
+        }
+        for(int i = 0; i < this.size(); i++){
+            if (ShallowO.get(i) != this.get(i)){
+                return false;
+            }
+        }
+        return true;
+    }
 }
